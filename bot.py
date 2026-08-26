@@ -5,7 +5,6 @@ from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, Comma
 import yt_dlp
 
 logging.basicConfig(level=logging.INFO)
-
 TOKEN = os.environ.get("BOT_TOKEN")
 DOWNLOAD_DIR = "/data/data/com.termux/files/home/telebot/downloads"
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
