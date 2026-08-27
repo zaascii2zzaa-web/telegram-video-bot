@@ -9,6 +9,7 @@ logging.basicConfig(level=logging.INFO)
 TOKEN = os.environ.get("BOT_TOKEN")
 COOKIES_CONTENT = os.environ.get("YOUTUBE_COOKIES")
 COOKIES_FILE = "/tmp/cookies.txt"
+
 if COOKIES_CONTENT:
     with open(COOKIES_FILE, "w") as f:
         f.write(COOKIES_CONTENT)
@@ -37,6 +38,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "no_warnings": True,
             "noplaylist": True,
         }
+
         if COOKIES_CONTENT:
             ydl_opts["cookiefile"] = COOKIES_FILE
 
