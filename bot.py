@@ -5,12 +5,14 @@ from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, Comma
 import yt_dlp
 
 logging.basicConfig(level=logging.INFO)
+
 TOKEN = os.environ.get("BOT_TOKEN")
 COOKIES_CONTENT = os.environ.get("YOUTUBE_COOKIES")
 COOKIES_FILE = "/tmp/cookies.txt"
 if COOKIES_CONTENT:
     with open(COOKIES_FILE, "w") as f:
         f.write(COOKIES_CONTENT)
+
 DOWNLOAD_DIR = "/data/data/com.termux/files/home/telebot/downloads"
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 
@@ -28,22 +30,22 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     try:
         ydl_opts = {
-    "outtmpl": f"{DOWNLOAD_DIR}/%(id)s.%(ext)s",
-    "format": "bv*+ba/best",
-    "merge_output_format": "mp4",
-    "quiet": True,
-    "no_warnings": True,
-    "noplaylist": True,
-}
-if COOKIES_CONTENT:
-    ydl_opts["cookiefile"] = COOKIES_FILE        }
+            "outtmpl": f"{DOWNLOAD_DIR}/%(id)s.%(ext)s",
+            "format": "bv*+ba/best",
+            "merge_output_format": "mp4",
+            "quiet": True,
+            "no_warnings": True,
+            "noplaylist": True,
+        }
+        if COOKIES_CONTENT:
+            ydl_opts["cookiefile"] = COOKIES_FILE
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=True)
             filepath = ydl.prepare_filename(info)
             title = info.get("title", "video")
 
-        filesize = os.path.getsize(filepath) / (1024 * 1024)  # بالميجا
+        filesize = os.path.getsize(filepath) / (1024 * 1024)
 
         if filesize > 50:
             await msg.edit_text(f"❌ الفيديو حجمه {filesize:.1f} ميجا، أكبر من حد تليغرام (50 ميجا). ما بقدر ابعتلك ياه.")
