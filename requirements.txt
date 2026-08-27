@@ -1,2 +1,2 @@
 python-telegram-bot
-yt-dlp==2025.8.22
+yt-dlp @ https://github.com/yt-dlp/yt-dlp/archive/refs/heads/master.tar.gz
